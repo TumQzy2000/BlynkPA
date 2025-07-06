@@ -1,0 +1,6 @@
+https://phanomconnect.ddns.net:9943/admin
+user : admin@blynk.cc
+pass : admins
+port : phanomconnect.ddns.net 9443
+8020
+
