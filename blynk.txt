@@ -1,6 +1,11 @@
 https://phanomconnect.ddns.net:9943/admin
+
+in blynk port custom : phanomconnect.ddns.net ใส่เลข 9443
+
 user : admin@blynk.cc
 pass : admins
-port : phanomconnect.ddns.net 9443
-8020
+
+นำโค้ดนี้ใส่ set up
+// Initialize Blynk
+Blynk.begin(auth, ssid, pass, "phanomconnect.ddns.net", 8020);
 
