@@ -1,0 +1,73 @@
+#include <BlynkSimpleEsp8266.h>
+#include <ESP8266WiFi.h>
+#include <Blynk.h>
+#define BLYNK_PRINT Serial
+#include <WiFi.h>
+#include <WiFiClient.h>
+
+// ใส่ TOKEN ที่ได้จากแอป Blynk Legacy
+char auth[] = "rqIm3VSyqVIQgTQmNZqr93VFXH0ynoxf";
+
+// ใส่ชื่อ WiFi และรหัสผ่าน
+char ssid[] = "DigitalLibrary-Event";
+char pass[] = "Lib@digital1";
+
+BlynkTimer timer;
+
+// กำหนดพินของ Relay
+#define RELAY1_PIN 12  // GPIO12 (D6)
+#define RELAY2_PIN 13  // GPIO13 (D7)
+#define RELAY3_PIN 14  // GPIO14 (D5)
+#define RELAY4_PIN 15  // GPIO15 (D8)
+
+void setup()
+{
+  Serial.begin(115200);
+  Blynk.begin(auth, ssid, pass, "phanomconnect.ddns.net", 8020);
+  
+  // กำหนดโหมดให้แต่ละพินเป็น output
+  pinMode(RELAY1_PIN, OUTPUT);
+  pinMode(RELAY2_PIN, OUTPUT);
+  pinMode(RELAY3_PIN, OUTPUT);
+  pinMode(RELAY4_PIN, OUTPUT);
+
+  // เริ่มต้นให้ Relay ปิด (HIGH หรือ LOW ขึ้นกับโมดูลที่ใช้)
+  digitalWrite(RELAY1_PIN, HIGH);
+  digitalWrite(RELAY2_PIN, HIGH);
+  digitalWrite(RELAY3_PIN, HIGH);
+  digitalWrite(RELAY4_PIN, HIGH);
+
+  // เชื่อมต่อ Blynk
+  Blynk.begin(auth, ssid, pass);
+}
+
+// ตัวควบคุม Relay จาก Blynk (ใช้ Virtual Pin V1-V4)
+BLYNK_WRITE(V1)
+{
+  int value = param.asInt();
+  digitalWrite(RELAY1_PIN, value);
+}
+
+BLYNK_WRITE(V2)
+{
+  int value = param.asInt();
+  digitalWrite(RELAY2_PIN, value);
+}
+
+BLYNK_WRITE(V3)
+{
+  int value = param.asInt();
+  digitalWrite(RELAY3_PIN, value);
+}
+
+BLYNK_WRITE(V4)
+{
+  int value = param.asInt();
+  digitalWrite(RELAY4_PIN, value);
+}
+
+void loop()
+{
+  Blynk.run();
+  timer.run();
+}
